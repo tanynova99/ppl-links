@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Занятия · Виктория Несветова</title>
+  <style>
+    @font-face {
+      font-family: 'Caveat';
+      src: url('../fonts/Caveat-VariableFont_wght.ttf') format('truetype');
+      font-weight: 400 700;
+      font-display: swap;
+    }
+    :root {
+      --accent: #3b5bdb;
+      --accent-2: #15aabf;
+      --accent-soft: #eef2ff;
+      --accent-line: #c7d2fe;
+      --blob-1: #dbe4ff;
+      --blob-2: #ffe3e3;
+      --blob-3: #c3fae8;
+      --word-1: #3b5bdb;
+      --word-2: #e03131;
+      --word-3: #0ca678;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px 16px 48px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 2%, var(--blob-1), transparent 38%),
+        radial-gradient(circle at 92% 8%, var(--blob-2), transparent 34%),
+        radial-gradient(circle at 50% 100%, var(--blob-3), transparent 42%),
+        #f4f6fb;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .bg-words {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-words span {
+      position: absolute;
+      font-weight: 800;
+      opacity: .14;
+      white-space: nowrap;
+      transform: rotate(var(--r, 0deg));
+      animation: float 14s ease-in-out infinite;
+    }
+    .bg-words span:nth-child(3n+1) { color: var(--word-1); }
+    .bg-words span:nth-child(3n+2) { color: var(--word-2); }
+    .bg-words span:nth-child(3n) { color: var(--word-3); }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+      50% { transform: translateY(-12px) rotate(var(--r, 0deg)); }
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 18px 50px rgba(30, 41, 59, .12);
+      overflow: hidden;
+    }
+    .hero {
+      padding: 34px 28px 28px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 700; letter-spacing: .5px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+    }
+    .badge {
+      display: inline-block; margin-top: 18px; padding: 6px 12px;
+      border-radius: 999px; background: rgba(255,255,255,.18);
+      font-size: 13px; font-weight: 600;
+    }
+    h1 {
+      margin: 14px 0 8px;
+      font-family: 'Caveat', 'Segoe Script', cursive;
+      font-weight: 700;
+      font-size: clamp(40px, 8vw, 56px);
+      line-height: 1.05;
+    }
+    .lead { margin: 0; color: rgba(255,255,255,.88); font-size: 16px; line-height: 1.5; }
+    .section { padding: 24px 28px; border-top: 1px solid var(--line); }
+    .section h2 { margin: 0 0 14px; font-size: 18px; letter-spacing: .2px; }
+    .meeting {
+      border: 1px solid var(--line); border-radius: 18px; padding: 16px;
+      margin-bottom: 12px; background: #fbfcff;
+    }
+    .meeting-head {
+      display: flex; justify-content: space-between; gap: 12px;
+      align-items: baseline; margin-bottom: 12px;
+    }
+    .meeting-label { font-weight: 700; }
+    .platform { color: var(--muted); font-size: 13px; white-space: nowrap; }
+    .btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 14px 18px; border-radius: 14px;
+      font-weight: 700; text-decoration: none;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 10px 24px rgba(30, 41, 59, .18);
+    }
+    .btn-secondary {
+      background: #fff; color: var(--accent);
+      border: 1.5px solid var(--accent-line);
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 8px 12px; border-radius: 999px;
+      background: var(--accent-soft); color: var(--accent);
+      font-weight: 600; font-size: 14px;
+    }
+    .pay-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      align-items: center; margin-bottom: 10px;
+    }
+    .pay-options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+    .status {
+      display: inline-block; padding: 7px 11px; border-radius: 999px;
+      font-size: 13px; font-weight: 700;
+    }
+    .status-debt { background: #ffe3e3; color: #c92a2a; }
+    .status-none { background: #fff3bf; color: #a15c00; }
+    .status-prepaid { background: #d3f9d8; color: #2b8a3e; }
+    .status-unknown { background: #e9ecef; color: #495057; }
+    .rate { font-weight: 700; font-size: 15px; }
+    .rate-title { margin: 12px 0 6px; font-size: 14px; font-weight: 700; }
+    .rate-list { margin-bottom: 12px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .rate-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 9px 12px; border-top: 1px solid var(--line); font-size: 14px;
+    }
+    .rate-row:first-child { border-top: 0; }
+    .rate-row span { color: var(--muted); }
+    .rate-row b { text-align: right; }
+    .history-list { margin-bottom: 10px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .history-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 9px 12px; border-top: 1px solid var(--line); font-size: 14px;
+    }
+    .history-row:first-child { border-top: 0; }
+    .history-row span { color: var(--muted); }
+    .history-row b { text-align: right; color: #2b8a3e; }
+    .history-row b.late { color: #a15c00; }
+    .credentials {
+      margin: 10px 0; border: 1px solid var(--line); border-radius: 12px;
+      padding: 10px 12px; background: #fff;
+    }
+    .credentials summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+    .cred-row {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+      padding: 6px 0; border-top: 1px dashed var(--line); font-size: 14px;
+    }
+    .cred-row span { color: var(--muted); }
+    .cred-row code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px; background: var(--accent-soft);
+      padding: 2px 6px; border-radius: 6px; word-break: break-all;
+    }
+    .muted { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .steps { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.6; }
+    .steps li { margin-bottom: 6px; }
+    .footer {
+      padding: 22px 28px 28px; border-top: 1px solid var(--line);
+      color: var(--muted); font-size: 14px;
+    }
+    .footer a { color: var(--accent); font-weight: 600; }
+    .small { font-size: 12px; }
+    @media (max-width: 480px) {
+      .hero, .section, .footer { padding-left: 20px; padding-right: 20px; }
+      .meeting-head { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-words" aria-hidden="true"><span style="top: 6%; left: 2%; font-size: 46px; --r: -8deg; animation-delay: 0s;">Hello</span><span style="top: 14%; right: 3%; font-size: 30px; --r: 6deg; animation-delay: -2s;">no cap</span><span style="top: 29%; left: 1%; font-size: 26px; --r: 4deg; animation-delay: -4s;">Let&#x27;s go</span><span style="top: 41%; right: 2%; font-size: 38px; --r: -5deg; animation-delay: -1s;">tea</span><span style="top: 57%; left: 2%; font-size: 32px; --r: 7deg; animation-delay: -3s;">mind the gap</span><span style="top: 68%; right: 1%; font-size: 24px; --r: -6deg; animation-delay: -5s;">book club</span><span style="top: 80%; left: 4%; font-size: 40px; --r: 5deg; animation-delay: -2.5s;">actually</span></div>
+  <main class="card">
+    <header class="hero">
+      <div class="avatar">ВН</div>
+      <div class="badge">Английский</div>
+      <h1>Hi, Виктория Несветова!</h1>
+      <p class="lead">Здесь всё для наших занятий: встречи, расписание и резервная ссылка.</p>
+    </header>
+
+    <section class="section">
+      <h2>Встречи</h2>
+      
+        <div class="meeting">
+          <div class="meeting-head">
+            <span class="meeting-label">Индивидуальные занятия</span>
+            <span class="platform">Microsoft Teams</span>
+          </div>
+          <a class="btn btn-primary" href="https://teams.live.com/meet/9368266068443?p=Q1pdFysz8MDhbQwVap" target="_blank" rel="noopener">
+            Открыть встречу
+          </a>
+        </div>
+    </section>
+
+    <section class="section">
+      <h2>Расписание</h2>
+      <div class="chips"><span class="chip">Сб 15:00</span></div>
+      <p class="muted">Время московское. Если нужно перенести занятие — напишите заранее.</p>
+    </section>
+    
+      <section class="section">
+        <h2>Резервная ссылка</h2>
+        <p class="muted">Если основная ссылка не открывается, подключитесь через Google Meet.</p>
+        <a class="btn btn-secondary" href="https://meet.google.com/iet-gowu-inw" target="_blank" rel="noopener">
+          Открыть Google Meet
+        </a>
+      </section>
+    
+      <section class="section">
+        <h2>Последние занятия</h2>
+        <div class="history-list"><div class="history-row"><span>06.11.2026 (Пт)</span><b>проведено</b></div><div class="history-row"><span>17.10.2026 (Сб)</span><b>проведено</b></div><div class="history-row"><span>07.10.2026 (Ср)</span><b>проведено</b></div><div class="history-row"><span>30.09.2026 (Ср)</span><b>проведено</b></div></div>
+        <p class="muted small">Пять последних проведённых занятий. Учтены и групповые встречи.</p>
+      </section>
+    
+      <section class="section">
+        <h2>Оплата</h2>
+        <div class="pay-row"><span class="status status-none">Оплата по факту</span><span class="rate">Ставка: 3 750 ₽ / 90 мин <span class="muted small">(по тарифу)</span></span></div>
+        <p class="muted">Последняя оплата: 26.09.2026 · 15 000 ₽.</p>
+        <p class="muted small">По журналу: оплачено 4 занятия, проведено 4.</p>
+        <div class="pay-options"><a class="btn btn-primary" href="https://qr.nspk.ru/AS1A0036C0P28R9N9JC93QHQ2RH0N6PS" target="_blank" rel="noopener">Оплатить по QR</a>
+        <details class="credentials">
+          <summary>СБП по номеру</summary>
+          <div class="cred-row"><span>Телефон</span><code>+7 915 955 56 10</code></div>
+          <p class="muted small">МТС Банк / ОТП Банк. После перевода пришлите подтверждение.</p>
+        </details>
+        <details class="credentials">
+          <summary>Карта ОТП Банка</summary>
+          <div class="cred-row"><span>Номер карты</span><code>2201 9604 7721 3639</code></div>
+          <p class="muted small">После перевода пришлите подтверждение.</p>
+        </details>
+        <details class="credentials">
+          <summary>Криптовалюта</summary>
+          <p class="muted small">Оплата через криптокошелёк в Telegram. Напишите
+          <a href="https://t.me/tanynova">@tanynova</a>, пришлю адрес и инструкцию.</p>
+        </details></div>
+        <p class="muted small">Другие способы — <a href="https://tanynova99.github.io/ppl-links/faq.html" target="_blank" rel="noopener">в FAQ</a>. После оплаты пришлите подтверждение в Telegram.</p>
+      </section>
+    
+      <section class="section">
+        <h2>Вход на платформу</h2>
+        
+      <div class="meeting">
+        <div class="meeting-head">
+          <span class="meeting-label">ProgressMe</span>
+          <span class="platform">личный кабинет</span>
+        </div>
+        
+        <details class="credentials">
+          <summary>Логин и пароль</summary>
+          <div class="cred-row"><span>Логин</span><code>nesvetova07@mail.ru</code></div><div class="cred-row"><span>Пароль</span><code>Fpi.1234</code></div>
+          
+        </details>
+        <a class="btn btn-secondary" href="https://progressme.ru/login" target="_blank" rel="noopener">Войти в ProgressMe</a>
+      </div>
+        <p class="muted small">Доступы только для вас. Не пересылайте эту страницу третьим лицам. Если вход не работает — напишите в Telegram.</p>
+      </section>
+    
+      <section class="section">
+        <h2>Материалы</h2>
+        
+      <div class="meeting">
+        <div class="meeting-head">
+          <span class="meeting-label">Материалы по английскому</span>
+          <span class="platform">Яндекс Диск</span>
+        </div>
+        <a class="btn btn-secondary" href="https://disk.yandex.com/d/wlr8FdDNMvjdZQ" target="_blank" rel="noopener">Открыть материалы</a>
+      </div>
+      <div class="meeting">
+        <div class="meeting-head">
+          <span class="meeting-label">YouTube: Unsolicited Advice (эссе и разборы на английском)</span>
+          <span class="platform">сайт</span>
+        </div>
+        <a class="btn btn-secondary" href="https://www.youtube.com/@unsolicitedadvice9198" target="_blank" rel="noopener">Открыть</a>
+      </div>
+      <div class="meeting">
+        <div class="meeting-head">
+          <span class="meeting-label">YouTube: Nile Red (научные эксперименты на английском)</span>
+          <span class="platform">сайт</span>
+        </div>
+        <a class="btn btn-secondary" href="https://www.youtube.com/@NileRed/videos" target="_blank" rel="noopener">Открыть</a>
+      </div>
+      <div class="meeting">
+        <div class="meeting-head">
+          <span class="meeting-label">YouTube: Cleo Abram (наука и технологии, Huge If True)</span>
+          <span class="platform">сайт</span>
+        </div>
+        <a class="btn btn-secondary" href="https://www.youtube.com/@CleoAbram" target="_blank" rel="noopener">Открыть</a>
+      </div>
+      </section>
+    
+      <section class="section">
+        <h2>Переносы и отмены</h2>
+        <ul class="steps">
+          <li>Отмена — не позже чем за 12 часов до занятия, иначе занятие сгорает.</li>
+          <li>Перенос без оплаты половины стоимости — не позже чем за 30 минут.</li>
+          <li>Групповые занятия не переносятся: смотрите запись и делайте ДЗ.</li>
+          <li>В паре решение о переносе принимают оба ученика.</li>
+        </ul>
+        <p class="muted small">Полные правила — <a href="https://tanynova99.github.io/ppl-links/faq.html" target="_blank" rel="noopener">в FAQ</a>.</p>
+      </section>
+    <section class="section">
+      <h2>Как подключиться</h2>
+      <ol class="steps">
+        <li>Откройте основную ссылку за 2–3 минуты до занятия.</li>
+        <li>Разрешите браузеру доступ к микрофону и камере.</li>
+        <li>Если основная ссылка не работает — используйте резервную.</li>
+      </ol>
+    </section>
+
+    <footer class="footer">
+      <p>Вопросы, переносы и отмена — <a href="https://t.me/tanynova">@tanynova</a> или по телефону <a href="tel:+79159555610">+7 915 955 56 10</a> (звонки, СМС, WhatsApp).</p>
+      <p class="muted small">Почта: <a href="mailto:crazybalabolka2000@yandex.ru">crazybalabolka2000@yandex.ru</a> · <a href="https://wa.me/79159555610" target="_blank" rel="noopener">WhatsApp</a> · <a href="https://vk.ru/tanynova69" target="_blank" rel="noopener">ВКонтакте</a></p>
+      <p class="muted small">Страница только для ученика. Пароли и доступы здесь не публикуются.</p>
+    </footer>
+  </main>
+</body>
+</html>
